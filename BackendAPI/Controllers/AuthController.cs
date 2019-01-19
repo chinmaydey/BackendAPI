@@ -22,20 +22,19 @@ namespace BackendAPI.Controllers
         {
             if (user == null)
             {
-                return BadRequest("Invalid client request");
+                return BadRequest("Invalid request");
             }
-
-            // todo
+            
             if (user.UserName == "johncitizen" && user.Password == "abc@123")
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("KeyForSignInSecret@1234"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
                 var tokeOptions = new JwtSecurityToken(
-                    issuer: "http://localhost:5001",
-                    audience: "http://localhost:5001",
+                    issuer: "http://localhost:2000",
+                    audience: "http://localhost:2000",
                     claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(5),
+                    expires: DateTime.Now.AddMinutes(30),
                     signingCredentials: signinCredentials
                 );
 
